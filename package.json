@@ -21,6 +21,7 @@
     "url": "https://github.com/Dovzhenko-olga/goit-js-hw-13-image-finder/issues"
   },
   "devDependencies": {
+    "gh-pages": "^3.2.0",
     "parcel-bundler": "^1.12.5",
     "parcel-plugin-handlebars-precompile": "^1.0.2",
     "parcel-plugin-nuke-dist": "^1.0.1",
