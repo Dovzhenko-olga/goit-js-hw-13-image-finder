@@ -60,7 +60,7 @@ function onSearch(e) {
       createGaleryMurcup(hits);
       refs.loadMoreBtn.removeAttribute('disabled');
     })
-    .catch(error => console.log(error));
+    .catch(onFetchError);
 }
 
 function onLoadMore() {
@@ -92,4 +92,19 @@ function onImage(e) {
     `<img src="${e.target.dataset.url}"/>`
   );
   instance.show();
+}
+
+function onFetchError(err) {
+  error({
+    text: `${err}`,
+    mode: 'dark',
+    closer: true,
+    hide: true,
+    sticker: false,
+    mouseReset: true,
+    shadow: true,
+    width: '350px',
+    minHeight: '14px',
+    delay: 2000,
+  })
 }

@@ -9,19 +9,17 @@ export default class PicturesApiService {
     this.page = 1;
   }
   
-  fetchArticles() {
+  async fetchArticles() {
     const options = {
     Authorization: API_KEY,
   };
   
-  
-  return fetch(`${BASE_URL}&q=${this.searchQuery}&image_type=photo&per_page=${PER_PAGE}&page=${this.page}`, options)
-  .then(r => r.json())
-  .then(data => {
-      this.page += 1;
-      return data.hits;
-   })
-  .catch(err => console.log('Error fetching data', err));
+    const response = await fetch(`${BASE_URL}&q=${this.searchQuery}&image_type=photo&per_page=${PER_PAGE}&page=${this.page}`, options);
+    const newImage = await response.json();
+    // const galerryCard = await newImage(data) => {
+    //   this.page += 1;
+    //   return data.hits;
+  //  }
   }
 
   resetPage() {
