@@ -24,43 +24,28 @@ function onSearch(e) {
   picturesApiService.query = e.target.value;
 
   if (picturesApiService.query.length < 3) {
-    return error({
-      text: 'Please enter your specific query!',
-      mode: 'light',
-      closer: true,
-      hide: true,
-      sticker: false,
-      mouseReset: true,
-      shadow: true,
-      addClass: 'pnotify-position',
-      width: '350px',
-      minHeight: '14px',
-      delay: 2000,
-    });
+    errorSetting.text = 'Please enter your specific query!';
+    errorSetting.mode = 'light';
+    return error(errorSetting);
   }
   picturesApiService.resetPage();
   picturesApiService.fetchArticles()
     .then(hits => {
       if (!hits.length) {
-        error({
-          text: 'Please enter a more specific query!',
-          mode: 'dark',
-          closer: true,
-          hide: true,
-          sticker: false,
-          mouseReset: true,
-          shadow: true,
-          addClass: 'pnotify-position',
-          width: '350px',
-          minHeight: '14px',
-          delay: 2000,
-        });
+        errorSetting.text = 'Please enter a more specific query!';
+        errorSetting.mode = 'dark';
+        error(errorSetting);
       }
       clearGaleryContainer();
       createGaleryMurcup(hits);
       refs.loadMoreBtn.removeAttribute('disabled');
     })
-    .catch(onFetchError);
+    .catch(err => {
+      errorSetting.text = `${err}`;
+      errorSetting.mode = 'light';
+      error(errorSetting);
+    }
+    );
 }
 
 function onLoadMore() {
@@ -94,17 +79,16 @@ function onImage(e) {
   instance.show();
 }
 
-function onFetchError(err) {
-  error({
-    text: `${err}`,
-    mode: 'dark',
+let errorSetting = {
+    text: "It's a fetching error",
+    mode: "dark",
     closer: true,
     hide: true,
     sticker: false,
     mouseReset: true,
     shadow: true,
-    width: '350px',
-    minHeight: '14px',
+    addClass: "pnotify-position",
+    width: "350px",
+    minHeight: "14px",
     delay: 2000,
-  })
-}
+  };
